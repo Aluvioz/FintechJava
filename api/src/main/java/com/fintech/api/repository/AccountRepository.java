@@ -12,4 +12,5 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Account> findWithLockById(UUID id);
+    Optional<Account> findByUserEmail(String email);
 }

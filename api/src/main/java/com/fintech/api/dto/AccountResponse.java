@@ -6,5 +6,7 @@ import java.util.UUID;
 public record AccountResponse(
         UUID id,
         String accountNumber,
+        String userName,
+        String userEmail,
         BigDecimal balance
 ) {}

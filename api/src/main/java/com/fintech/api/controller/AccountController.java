@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.UUID;
 
@@ -27,4 +28,10 @@ public class AccountController {
         accountService.transfer(request);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/me")
+public ResponseEntity<AccountResponse> getMyAccount(Authentication authentication) {
+    String email = authentication.getName();
+    return ResponseEntity.ok(accountService.getMyAccount(email));
+}
 }

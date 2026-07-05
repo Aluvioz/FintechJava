@@ -20,10 +20,30 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
 
+
+    public AccountResponse getMyAccount(String email) {
+    Account account = accountRepository.findByUserEmail(email)
+            .orElseThrow(() -> new BusinessException("Conta não encontrada para este usuário"));
+
+    return new AccountResponse(
+            account.getId(),
+            account.getAccountNumber(),
+            account.getUser().getName(),
+            account.getUser().getEmail(),
+            account.getBalance()
+    );
+}
+
     public AccountResponse getBalance(UUID accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessException("Conta não encontrada"));
-        return new AccountResponse(account.getId(), account.getAccountNumber(), account.getBalance());
+        return new AccountResponse(
+            account.getId(),
+            account.getAccountNumber(),
+            account.getUser().getName(),
+            account.getUser().getEmail(),
+            account.getBalance()
+        );
     }
 
     @Transactional
